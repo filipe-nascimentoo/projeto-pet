@@ -5,7 +5,7 @@
   "main": "projeto-pet.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon express-base.js"
+    "start": "nodemon servidor.js"
   },
   "keywords": [
     "pets",
