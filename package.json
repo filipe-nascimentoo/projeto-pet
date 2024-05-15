@@ -1,0 +1,20 @@
+{
+  "name": "projeto-pet",
+  "version": "1.0.0",
+  "description": "Projeto para sistema de adoção de pets",
+  "main": "projeto-pet.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon express-base.js"
+  },
+  "keywords": [
+    "pets",
+    "adoção"
+  ],
+  "author": "Luis Filipe Nascimento",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemon": "^3.1.0"
+  }
+}
