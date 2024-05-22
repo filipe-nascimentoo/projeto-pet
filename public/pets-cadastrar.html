@@ -3,9 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Projeto Pets - Cadastrar Pet</title>
 </head>
 <body>
-    
+    <div id="container">
+        <header>
+            
+        </header>
+        <main>
+            <form action="/pets/cadastrar" method="POST">
+                <h2>Cadastrar Pet</h2>
+                <div id="grid-form">
+                    <div>
+                        <label for="nome">Nome</label>
+                        <input type="text" name="nome" id="nome">
+                    </div>
+                    <div>
+                        <label for="especie">Especie</label>
+                        <select name="especie">
+                            <option value="" selected>Selecione...</option>
+                            <option value="Cachorro">Cachorro</option>
+                            <option value="Gato">Gato</option>
+                            <option value="Cavalo">Cavalo</option>
+                          </select>
+                    </div>
+                    <div>
+                        <label for="idade">Idade</label>
+                        <input type="text" name="idade" id="idade">
+                    </div>
+                </div>
+                <button type="submit">Cadastrar</button>
+            </form>
+        </main>
+    </div>
 </body>
 </html>
