@@ -27,6 +27,10 @@ app.get('/login/cadastrar', (req, res) => {
     res.sendFile(__dirname + '/public/login-cadastrar.html')
 })
 
+app.get('/usuarios/cadastrar', (req, res) => {
+    res.sendFile(__dirname + '/public/usuarios-cadastrar.html')
+})
+
 app.get('/usuarios/listar/:id?', (req, res) => {
 
     let id = req.params.id
@@ -111,6 +115,18 @@ app.post('/pets/cadastrar', (req, res) => {
         Idade: ${idade}
     `)
 })
+
+
+app.post('/usuarios/cadastrar', (req, res) => {
+    var { nome, telefone, email, senha, confirmar } = req.body
+
+    nome == '' ? res.send(`Campo nome é obrigatorio`) : ``;
+    senha != confirmar ? res.send(`O campo senha e confirmar senha estão diferentes`) : ``;
+
+    res.send(`${nome} seu cadastro foi realizado com sucesso`)
+})
+
+
 
 
 // Pagina de erro
