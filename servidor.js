@@ -1,4 +1,5 @@
 const express = require('express')
+const mysql = require('mysql2')
 
 const app = express()
 const porta = 4000
@@ -14,116 +15,125 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 
+// cria a string de conexão
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'db_adote_pet'
+})
+
+// conecta ao banco de dados
+db.connect((err) => {
+    if (err) {
+        console.log('Não foi possivel conectar ao banco', err)
+        return
+    }
+    console.log('Conectado ao banco de dados')
+})
+
+
 // Define as rotas GET
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html')
 })
 
-app.get('/login', (req, res) => {
-    res.sendFile(__dirname + '/public/login.html')
+app.get('/pet/cadastrar', (req, res) => {
+    res.sendFile(__dirname + '/public/pet-cadastrar.html')
 })
 
-app.get('/login/cadastrar', (req, res) => {
-    res.sendFile(__dirname + '/public/login-cadastrar.html')
-})
-
-app.get('/usuarios/cadastrar', (req, res) => {
-    res.sendFile(__dirname + '/public/usuarios-cadastrar.html')
-})
-
-app.get('/usuarios/listar/:id?', (req, res) => {
-
-    let id = req.params.id
-
-    const usuarios = [
-        {
-            nome: "Filipe",
-            telefone: "(19) 9 8106-8804",
-            email: "filipe.nascii@gmail.com"
-        },
-        {
-            nome: "Luis",
-            telefone: "(19) 9 8106-8805",
-            email: "filipe_nascimentoo@hotmail.com"
-        },
-        {
-            nome: "Giulliane",
-            telefone: "(19) 9 8278-2527",
-            email: "giuxavierdacruz@hotmail.com"
+app.get('/pet/listar', (req, res) => {
+    const sql = "SELECT * FROM pet"
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).json({ 'resposta': `Não foi possível listar os pets: ${err}` })
         }
-    ]
-
-    id ? res.json(usuarios[id]) : res.json(usuarios)
+        return res.status(200).json(results)
+    })
 })
 
-app.get('/pets', (req, res) => {
-    res.sendFile(__dirname + '/public/pets.html')
-})
+app.post('/pet/cadastrar', (req, res) => {
+    // criar as variaveis e armazena os valores recebidos na req
+    let { nome, raca, porte, data_nascimento, cor, sexo, castrado, adotado, observacao } = req.body
 
-app.get('/pets/cadastrar', (req, res) => {
-    res.sendFile(__dirname + '/public/pets-cadastrar.html')
-})
+    // inserção dos dados no banco
+    const sql = "INSERT INTO pet (nome, raca, porte, data_nascimento, cor, sexo, castrado, adotado, observacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
 
-app.get('/pets/listar', (req, res) => {
-    // const pets = [
-    //     'Caramelo',
-    //     'Pitoco',
-    //     'Pocoto'
-    // ];
-
-    const pets = [
-        {
-            nome: "Caramelo",
-            especie: "Cachorro",
-            idade: 2
-        },
-        {
-            nome: "Chaninho",
-            especie: "Gato",
-            idade: 3
-        },
-        {
-            nome: "Pocoto",
-            especie: "Cavalo",
-            idade: 5
+    db.query(sql, [nome, raca, porte, data_nascimento, cor, sexo, castrado, adotado, observacao], (err) => {
+        if (err) {
+            res.status(500).json({ 'resposta': `Não foi possível inserir o pet: ${err}` })
         }
-    ]
+        return res.status(200).json({ 'resposta': `Pet cadastrado com sucesso!` })
+    })
+})
 
-    res.json(pets)
+app.get('/pet/listar', (req, res) => {
+    const sql = "SELECT * FROM pet"
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).json({ 'resposta': `Não foi possível listar os Pets: ${err}` })
+        }
+        return res.status(200).json(results)
+    })
+})
+
+app.delete('/pet/deletar', (req, res) => {
+    let {id} = req.body
+
+    const sql = "DELETE FROM pet WHERE id = ?;"
+    
+    db.query(sql, [id], (err) => {
+        if (err) {
+            return res.status(500).json({ 'resposta': `${err}`, 'titulo': `Erro`, 'icone': `error` })
+        }
+        return res.status(200).json({ 'resposta': `pet deletado com sucesso!`, 'titulo': `Sucesso`, 'icone': `success` })
+    })
 })
 
 
-// Define as rotas POST
-app.post('/login/cadastrar', (req, res) => {
-    var { nome, telefone, email, senha, confirmar } = req.body
 
-    nome == '' ? res.send(`Campo nome é obrigatorio`) : ``;
-    senha != confirmar ? res.send(`O campo senha e confirmar senha estão diferentes`) : ``;
 
-    res.send(`${nome} seu cadastro foi realizado com sucesso`)
+
+app.get('/pessoa/cadastrar', (req, res) => {
+    res.sendFile(__dirname + '/public/pessoa-cadastrar.html')
 })
 
-app.post('/pets/cadastrar', (req, res) => {
-    var { nome, especie, idade } = req.body
+app.post('/pessoa/cadastrar', (req, res) => {
+    // criar as variaveis e armazena os valores recebidos na req
+    let { cpf, nome, email, rua, numero, bairro, complemento, cidade, estado, cep, rg, telefone, data_nascimento, senha } = req.body
 
-    nome == '' || idade == '' || especie == '' ? res.send(`Preencha todos os campos obrigatorios`) : ``;
+    // inserção dos dados no banco
+    const sql = "INSERT INTO pessoa (cpf, nome, email, rua, numero, bairro, complemento, cidade, estado, cep, rg, telefone, data_nascimento, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
 
-    res.send(`
-        <h1>Cadastro realizado com sucesso!</h1>
-        Nome: ${nome}<br>
-        Especie: ${especie}<br>
-        Idade: ${idade}
-    `)
+    db.query(sql, [cpf, nome, email, rua, numero, bairro, complemento, cidade, estado, cep, rg, telefone, data_nascimento, senha], (err) => {
+        if (err) {
+            res.status(500).json({ 'resposta': `Não foi possível inserir o novo cadastro: ${err}` })
+        }
+        return res.status(200).json({ 'resposta': `Cadastro realizado com sucesso!` })
+    })
 })
 
+app.get('/pessoa/listar', (req, res) => {
+    const sql = "SELECT * FROM pessoa"
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).json({ 'resposta': `Não foi possível listar os Pets: ${err}` })
+        }
+        return res.status(200).json(results)
+    })
+})
 
-app.post('/usuarios/cadastrar', (req, res) => {
-    var { nome, telefone, email, senha, confirmar } = req.body
+app.delete('/pessoa/deletar', (req, res) => {
+    let {id} = req.body
 
-    nome == '' ? res.send(`Campo nome é obrigatorio`) : ``;
-    senha != confirmar ? res.send(`O campo senha e confirmar senha estão diferentes`) : ``;
-
-    res.send(`${nome} seu cadastro foi realizado com sucesso`)
+    const sql = "DELETE FROM pessoa WHERE id = ?;"
+    
+    db.query(sql, [id], (err) => {
+        if (err) {
+            return res.status(500).json({ 'resposta': `${err}`, 'titulo': `Erro`, 'icone': `error` })
+        }
+        return res.status(200).json({ 'resposta': `usuario deletado com sucesso!`, 'titulo': `Sucesso`, 'icone': `success` })
+    })
 })
 
 
