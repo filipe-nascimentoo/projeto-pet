@@ -97,13 +97,25 @@ const listaPessoa = () => {
                 </tr>
              `
             }
-            table = new DataTable('#pessoas');
+            
+            table = new DataTable('#pessoas', {
+                scrollX: true,
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
+                },
+                columnDefs: [
+                    {
+                        targets: 13,
+                        render: DataTable.render.date()
+                    }
+                ]
+            });
         })
         .catch(error => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Não foi possivel realizar a requisição',
+                text: error,
             });
         });
 }
