@@ -79,8 +79,8 @@ const listaPet = () => {
                     <td>${result[cont].data_nascimento}</td>
                     <td>${result[cont].observacao}</td>
                     <td>${result[cont].cor}</td>
-                    <td>${result[cont].sexo}</td>
-                    <td>${result[cont].castrado}</td>
+                    <td>${result[cont].sexo == "M" ? 'Macho' : 'Fêmia'}</td>
+                    <td>${result[cont].castrado == "1" ? 'Sim' : 'Não'}</td>
                     <td>${result[cont].adotado}</td>
                     <td><i class="fa-solid fa-trash" style="color: #ff0000; cursor: pointer;" onclick="deletar(${result[cont].id},'${result[cont].nome}')"></i></td>
                 </tr>
