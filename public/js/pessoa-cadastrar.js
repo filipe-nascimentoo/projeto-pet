@@ -78,9 +78,9 @@ const listaPessoa = () => {
             for (cont = 0; cont < result.length; cont++) {
                 tabela.innerHTML += `
                 <tr>
+                    <td>${result[cont].nome}</td>
                     <td>${result[cont].id}</td>
                     <td>${result[cont].cpf}</td>
-                    <td>${result[cont].nome}</td>
                     <td>${result[cont].email}</td>
                     <td>${result[cont].rua}</td>
                     <td>${result[cont].numero}</td>
@@ -99,6 +99,10 @@ const listaPessoa = () => {
             }
             
             table = new DataTable('#pessoas', {
+                fixedColumns: {
+                    start: 1,
+                    end: 1
+                },
                 scrollX: true,
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'

@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cadastro de Pets</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
 </head>
 
 <body>
@@ -43,7 +44,9 @@
     <div class="container">
         <form id="cadastrar">
             <div class="card border-primary mb-3">
-                <div class="card-header">Dados do Pet</div>
+                <div class="card-header">
+                    <h4>Dados do Pet</h4>
+                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="mb-3 col-md">
@@ -103,47 +106,148 @@
                         <textarea class="form-control" id="observacao" name="observacao" rows="3"></textarea>
                     </div>
                 </div>
-            </div>
-            <div class="text-end">
-                <button type="submit" class="btn btn-outline-success">Cadastrar</button>
+
+                <div class="text-end p-2">
+                    <button type="submit" class="btn btn-outline-success">Cadastrar</button>
+                </div>
             </div>
         </form>
 
         <!-- Listagem -->
         <div id="listagem">
-            <h2>Relatorio de pets cadastrados</h2>
-            <table id="pets" class="table table-striped" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>nome</th>
-                        <th>raça</th>
-                        <th>porte</th>
-                        <th>Data de nascimento</th>
-                        <th>Observação</th>
-                        <th>Cor</th>
-                        <th>Sexo</th>
-                        <th>Castrado</th>
-                        <th>Adotado</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="dados">
+            <div class="card border-primary mb-3">
+                <div class="card-header">
+                    <h4>Relatorio de pets cadastrados</h4>
+                </div>
+                <div class="card-body">
+                    <table id="pets" class="table table-striped" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>nome</th>
+                                <th>raça</th>
+                                <th>porte</th>
+                                <th>Data de nascimento</th>
+                                <th>Observação</th>
+                                <th>Cor</th>
+                                <th>Sexo</th>
+                                <th>Castrado</th>
+                                <th>Adotado</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dados">
 
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <form id="atualizar">
+                <div class="card border-primary mb-3">
+                    <div class="card-header">
+                        <h4>Atualizar Pet</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="mb-3 col-md ">
+                                <label for="atualizar-id" class="form-label">ID</label>
+                                <input type="text" class="form-control" id="atualizar-id" name="atualizar-id"
+                                    placeholder="" readonly>
+                            </div>
+
+                            <div class="mb-3 col-md">
+                                <label for="atualizar-nome" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="atualizar-nome" name="atualizar-nome"
+                                    required>
+                            </div>
+                            <div class="mb-3 col-md">
+                                <label for="atualizar-raca" class="form-label">Raça</label>
+                                <input type="text" class="form-control" id="atualizar-raca" name="atualizar-raca"
+                                    required>
+                            </div>
+                            <div class="mb-3 col-md">
+                                <label for="atualizar-porte" class="form-label">Porte</label>
+                                <select class="form-select" aria-label="Default select example" id="atualizar-porte"
+                                    name="atualizar-porte" required>
+                                    <option selected>Selecione o porte do pet</option>
+                                    <option value="Pequeno">Pequeno</option>
+                                    <option value="Médio">Médio</option>
+                                    <option value="Grande">Grande</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="mb-3 col-md">
+                                <label for="atualizar-data_nascimento" class="form-label">Data de nascimento</label>
+                                <input type="date" class="form-control" id="atualizar-data_nascimento"
+                                    name="atualizar-data_nascimento">
+                            </div>
+                            <div class="mb-3 col-md">
+                                <label for="atualizar-cor" class="form-label">Cor</label>
+                                <input type="text" class="form-control" id="atualizar-cor" name="atualizar-cor">
+                            </div>
+                            <div class="mb-3 col-md">
+                                <label for="atualizar-sexo" class="form-label">Sexo</label>
+                                <select class="form-select" aria-label="Default select example" id="atualizar-sexo"
+                                    name="atualizar-sexo">
+                                    <option selected>Selecione o sexo do pet</option>
+                                    <option value="M">Macho</option>
+                                    <option value="F">Fêmea</option>
+                                </select>
+                            </div>
+                            <div class="mb-3 col-md">
+                                <label class="form-label">Mais Informações</label>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="atualizar-castrado"
+                                            name="atualizar-castrado">
+                                        <label class="form-check-label" for="atualizar-castrado">Castrado</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="atualizar-adotado"
+                                            name="atualizar-adotado">
+                                        <label class="form-check-label" for="atualizar-adotado">Adotado</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-md">
+                            <label for="atualizar-observacao" class="form-label">Observações</label>
+                            <textarea class="form-control" id="atualizar-observacao" name="atualizar-observacao" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="text-end m-2">
+                        <button type="submit" class="btn btn-outline-success">Atualizar</button>
+                    </div>
+                </div>
+            </form>
+
         </div>
-    </div>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
-    
-    <script src="/js/sweetalert2@11/sweetalert2@11.js"></script>
-    <script src="/js/pet-cadastrar.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
+
+        <!-- Scripts dos Botões -->
+        <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.dataTables.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.colVis.min.js"></script>
+        <!-- fim scripts do Botões -->
+
+        <script src="/js/sweetalert2@11/sweetalert2@11.js"></script>
+        <script src="/js/pet-cadastrar.js"></script>
 </body>
 
 </html>

@@ -52,6 +52,31 @@ app.get('/pet/listar', (req, res) => {
     })
 })
 
+app.get('/pet/listar', (req, res) => {
+    const sql = "SELECT * FROM pet"
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).json({ 'resposta': `Não foi possível listar os Pets: ${err}` })
+        }
+        return res.status(200).json(results)
+    })
+})
+
+
+
+app.post('/pet/listar/id', (req, res) => {
+
+    let id = req.body.id
+
+    const sql = "SELECT * FROM pet WHERE id = ?"
+    db.query(sql, [id], (err, results) => {
+        if (err) {
+            return res.status(500).json({ 'resposta': `Não foi possível retornar as informações do Pet: ${err}` })
+        }
+        return res.status(200).json(results)
+    })
+})
+
 app.post('/pet/cadastrar', (req, res) => {
     // criar as variaveis e armazena os valores recebidos na req
     let { nome, raca, porte, data_nascimento, cor, sexo, castrado, adotado, observacao } = req.body
@@ -67,15 +92,7 @@ app.post('/pet/cadastrar', (req, res) => {
     })
 })
 
-app.get('/pet/listar', (req, res) => {
-    const sql = "SELECT * FROM pet"
-    db.query(sql, (err, results) => {
-        if (err) {
-            return res.status(500).json({ 'resposta': `Não foi possível listar os Pets: ${err}` })
-        }
-        return res.status(200).json(results)
-    })
-})
+
 
 app.delete('/pet/deletar', (req, res) => {
     let {id} = req.body
@@ -87,6 +104,22 @@ app.delete('/pet/deletar', (req, res) => {
             return res.status(500).json({ 'resposta': `${err}`, 'titulo': `Erro`, 'icone': `error` })
         }
         return res.status(200).json({ 'resposta': `pet deletado com sucesso!`, 'titulo': `Sucesso`, 'icone': `success` })
+    })
+})
+
+
+app.put('/pet/atualizar', (req, res) => {
+    // criar as variaveis e armazena os valores recebidos na req
+    let { nome, raca, porte, data_nascimento, cor, sexo, castrado, adotado, observacao, id } = req.body
+
+    // inserção dos dados no banco
+    const sql = "UPDATE pet SET nome = ?, raca = ?, porte = ?, data_nascimento = ?, cor = ?, sexo = ?, castrado = ?, adotado = ?, observacao = ? WHERE id = ?;"
+
+    db.query(sql, [nome, raca, porte, data_nascimento, cor, sexo, castrado, adotado, observacao, id], (err) => {
+        if (err) {
+            res.status(500).json({ 'resposta': `Não foi possível inserir o pet: ${err}` })
+        }
+        return res.status(200).json({ 'resposta': `Pet cadastrado com sucesso!` })
     })
 })
 
