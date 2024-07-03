@@ -72,34 +72,71 @@ const listaPet = () => {
             for (cont = 0; cont < result.length; cont++) {
                 tabela.innerHTML += `
                 <tr>
-                    <td>${result[cont].id}</td>
+                    <td class="text-center">${result[cont].id}</td>
                     <td>${result[cont].nome}</td>
                     <td>${result[cont].raca}</td>
                     <td>${result[cont].porte}</td>
-                    <td>${result[cont].data_nascimento}</td>
+                    <td class="text-center">${result[cont].data_nascimento}</td>
                     <td>${result[cont].observacao}</td>
                     <td>${result[cont].cor}</td>
                     <td>${result[cont].sexo == "M" ? 'Macho' : 'Fêmea'}</td>
-                    <td>${result[cont].castrado == "1" ? 'Sim' : 'Não'}</td>
-                    <td>${result[cont].adotado == "1" ? 'Sim' : 'Não'}</td>
-                    <td>
-                        <i class="fa-solid fa-gear" style="cursor: pointer;" onclick="atualizar(${result[cont].id},'${result[cont].nome}')"></i>
+                    <td class="text-center">${result[cont].castrado == "1" ? 'Sim' : 'Não'}</td>
+                    <td class="text-center">${result[cont].adotado == "1" ? 'Sim' : 'Não'}</td>
+                    <td class="text-center">
+                        <i class="fa-solid fa-pen-to-square" style="color: #28a745; cursor: pointer;" onclick="atualizar(${result[cont].id})"></i>
                         <i class="fa-solid fa-trash" style="color: #ff0000; cursor: pointer;" onclick="deletar(${result[cont].id},'${result[cont].nome}')"></i>
                     </td>
                 </tr>
              `
             }
-            table = new DataTable('#pets', {
+            table = new DataTable('#pets', { 
+                fixedColumns: {
+                    start: 1,
+                    end: 1
+                },
                 layout: {
                     topStart: {
                         buttons: [
-                            'copyHtml5',
+                            {
+                                extend: 'print',
+                                exportOptions: {
+                                    columns: ':visible'
+                                },
+                                text: '<i class="fa-solid fa-print fa-xl"></i>',
+                                titleAttr: 'Imprimir'
+                            },
+                            {
+                                extend: 'copyHtml5',
+                                exportOptions: {
+                                    columns: ':visible'
+                                },
+                                text: '<i class="fa-solid fa-copy fa-xl"></i>',
+                                titleAttr: 'Copiar'
+                            },
                             {
                                 extend: 'excelHtml5',
                                 exportOptions: {
-                                    columns: ':visible' // Exporta apenas colunas visíveis
-                                }
-                            }, 'csvHtml5', 'pdfHtml5',
+                                    columns: ':visible'
+                                },
+                                text: '<i class="fa-solid fa-file-excel fa-xl"></i>',
+                                titleAttr: 'Excel'
+                            },
+                            {
+                                extend: 'csvHtml5',
+                                exportOptions: {
+                                    columns: ':visible'
+                                },
+                                text: '<i class="fa-sharp fa-solid fa-file-csv fa-xl"></i>',
+                                titleAttr: 'CSV'
+                            },
+                            {
+                                extend: 'pdfHtml5',
+                                exportOptions: {
+                                    columns: ':visible'
+                                },
+                                text: '<i class="fa-solid fa-file-pdf fa-xl"></i>',
+                                titleAttr: 'PDF'
+                            },
                             {
                                 extend: 'colvis',
                                 columnText: function (dt, idx, title) {
@@ -182,16 +219,16 @@ const atualizar = (id) => {
             const data = new Date(result[0].data_nascimento)
             const dataFormatada = data.toISOString().split('T')[0];
 
-            document.getElementById('atualizar-nome').value = result[0].nome
-            document.getElementById('atualizar-raca').value = result[0].raca
-            document.getElementById('atualizar-porte').value = result[0].porte
-            document.getElementById('atualizar-data_nascimento').value = dataFormatada
-            document.getElementById('atualizar-cor').value = result[0].cor
-            document.getElementById('atualizar-sexo').value = result[0].sexo
-            document.getElementById('atualizar-castrado').checked = result[0].castrado === '1' ? true : false
-            document.getElementById('atualizar-adotado').checked = result[0].adotado === '1' ? true : false
-            document.getElementById('atualizar-observacao').value = result[0].observacao
-            document.getElementById('atualizar-id').value = result[0].id
+            document.getElementById('atualizar_nome').value = result[0].nome
+            document.getElementById('atualizar_raca').value = result[0].raca
+            document.getElementById('atualizar_porte').value = result[0].porte
+            document.getElementById('atualizar_data_nascimento').value = dataFormatada
+            document.getElementById('atualizar_cor').value = result[0].cor
+            document.getElementById('atualizar_sexo').value = result[0].sexo
+            document.getElementById('atualizar_castrado').checked = result[0].castrado === '1' ? true : false
+            document.getElementById('atualizar_adotado').checked = result[0].adotado === '1' ? true : false
+            document.getElementById('atualizar_observacao').value = result[0].observacao
+            document.getElementById('atualizar_id').value = result[0].id
         })
 }
 
@@ -200,16 +237,16 @@ document.getElementById('atualizar').addEventListener('submit', async (e) => {
     e.preventDefault();
 
     // captura dos elementos do form
-    let id = document.getElementById('atualizar-id')
-    let nome = document.getElementById('atualizar-nome')
-    let raca = document.getElementById('atualizar-raca')
-    let porte = document.getElementById('atualizar-porte')
-    let data_nascimento = document.getElementById('atualizar-data_nascimento')
-    let cor = document.getElementById('atualizar-cor')
-    let sexo = document.getElementById('atualizar-sexo')
-    let castrado = document.getElementById('atualizar-castrado').checked ? '1' : '0';
-    let adotado = document.getElementById('atualizar-adotado').checked ? '1' : '0';
-    let observacao = document.getElementById('atualizar-observacao')
+    let id = document.getElementById('atualizar_id')
+    let nome = document.getElementById('atualizar_nome')
+    let raca = document.getElementById('atualizar_raca')
+    let porte = document.getElementById('atualizar_porte')
+    let data_nascimento = document.getElementById('atualizar_data_nascimento')
+    let cor = document.getElementById('atualizar_cor')
+    let sexo = document.getElementById('atualizar_sexo')
+    let castrado = document.getElementById('atualizar_castrado').checked ? '1' : '0';
+    let adotado = document.getElementById('atualizar_adotado').checked ? '1' : '0';
+    let observacao = document.getElementById('atualizar_observacao')
     
     await fetch('/pet/atualizar', {
         method: 'PUT',
@@ -241,7 +278,7 @@ document.getElementById('atualizar').addEventListener('submit', async (e) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Ocorreu um erro ao cadastrar o pet. Por favor, tente novamente mais tarde.',
+                text: 'Ocorreu um erro ao atualizar o pet. Por favor, tente novamente mais tarde.',
             });
         });
 

@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cadastro de Pets</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-
     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+
+    <!-- Css dataTable -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/5.0.1/css/fixedColumns.dataTables.css">
+    <!-- Fim css dataTable -->
 </head>
 
 <body>
@@ -45,7 +48,7 @@
         <form id="cadastrar">
             <div class="card border-primary mb-3">
                 <div class="card-header">
-                    <h4>Dados do Pet</h4>
+                    <h4>Cadastrar Pet</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -57,11 +60,11 @@
                             <label for="raca" class="form-label">Raça</label>
                             <input type="text" class="form-control" id="raca" required>
                         </div>
-                        <div class="mb-3 col-md">
+                        <div class="mb-3 col-md-2">
                             <label for="porte" class="form-label">Porte</label>
                             <select class="form-select" aria-label="Default select example" id="porte" name="porte"
                                 required>
-                                <option selected>Selecione o porte do pet</option>
+                                <option selected>Selecione o porte</option>
                                 <option value="Pequeno">Pequeno</option>
                                 <option value="Médio">Médio</option>
                                 <option value="Grande">Grande</option>
@@ -107,7 +110,7 @@
                     </div>
                 </div>
 
-                <div class="text-end p-2">
+                <div class="text-end p-3">
                     <button type="submit" class="btn btn-outline-success">Cadastrar</button>
                 </div>
             </div>
@@ -151,27 +154,27 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="mb-3 col-md ">
-                                <label for="atualizar-id" class="form-label">ID</label>
-                                <input type="text" class="form-control" id="atualizar-id" name="atualizar-id"
+                            <div class="mb-3 col-md-1">
+                                <label for="atualizar_id" class="form-label">ID</label>
+                                <input type="text" class="form-control" id="atualizar_id" name="atualizar_id"
                                     placeholder="" readonly>
                             </div>
 
                             <div class="mb-3 col-md">
-                                <label for="atualizar-nome" class="form-label">Nome</label>
-                                <input type="text" class="form-control" id="atualizar-nome" name="atualizar-nome"
+                                <label for="atualizar_nome" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="atualizar_nome" name="atualizar_nome"
                                     required>
                             </div>
                             <div class="mb-3 col-md">
-                                <label for="atualizar-raca" class="form-label">Raça</label>
-                                <input type="text" class="form-control" id="atualizar-raca" name="atualizar-raca"
+                                <label for="atualizar_raca" class="form-label">Raça</label>
+                                <input type="text" class="form-control" id="atualizar_raca" name="atualizar_raca"
                                     required>
                             </div>
-                            <div class="mb-3 col-md">
-                                <label for="atualizar-porte" class="form-label">Porte</label>
-                                <select class="form-select" aria-label="Default select example" id="atualizar-porte"
-                                    name="atualizar-porte" required>
-                                    <option selected>Selecione o porte do pet</option>
+                            <div class="mb-3 col-md-2">
+                                <label for="atualizar_porte" class="form-label">Porte</label>
+                                <select class="form-select" aria-label="Default select example" id="atualizar_porte"
+                                    name="atualizar_porte" required>
+                                    <option selected>Selecione o porte</option>
                                     <option value="Pequeno">Pequeno</option>
                                     <option value="Médio">Médio</option>
                                     <option value="Grande">Grande</option>
@@ -181,18 +184,18 @@
 
                         <div class="row">
                             <div class="mb-3 col-md">
-                                <label for="atualizar-data_nascimento" class="form-label">Data de nascimento</label>
-                                <input type="date" class="form-control" id="atualizar-data_nascimento"
-                                    name="atualizar-data_nascimento">
+                                <label for="atualizar_data_nascimento" class="form-label">Data de nascimento</label>
+                                <input type="date" class="form-control" id="atualizar_data_nascimento"
+                                    name="atualizar_data_nascimento">
                             </div>
                             <div class="mb-3 col-md">
-                                <label for="atualizar-cor" class="form-label">Cor</label>
-                                <input type="text" class="form-control" id="atualizar-cor" name="atualizar-cor">
+                                <label for="atualizar_cor" class="form-label">Cor</label>
+                                <input type="text" class="form-control" id="atualizar_cor" name="atualizar_cor">
                             </div>
                             <div class="mb-3 col-md">
-                                <label for="atualizar-sexo" class="form-label">Sexo</label>
-                                <select class="form-select" aria-label="Default select example" id="atualizar-sexo"
-                                    name="atualizar-sexo">
+                                <label for="atualizar_sexo" class="form-label">Sexo</label>
+                                <select class="form-select" aria-label="Default select example" id="atualizar_sexo"
+                                    name="atualizar_sexo">
                                     <option selected>Selecione o sexo do pet</option>
                                     <option value="M">Macho</option>
                                     <option value="F">Fêmea</option>
@@ -202,49 +205,54 @@
                                 <label class="form-label">Mais Informações</label>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="atualizar-castrado"
-                                            name="atualizar-castrado">
-                                        <label class="form-check-label" for="atualizar-castrado">Castrado</label>
+                                        <input class="form-check-input" type="checkbox" id="atualizar_castrado"
+                                            name="atualizar_castrado">
+                                        <label class="form-check-label" for="atualizar_castrado">Castrado</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="atualizar-adotado"
-                                            name="atualizar-adotado">
-                                        <label class="form-check-label" for="atualizar-adotado">Adotado</label>
+                                        <input class="form-check-input" type="checkbox" id="atualizar_adotado"
+                                            name="atualizar_adotado">
+                                        <label class="form-check-label" for="atualizar_adotado">Adotado</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mb-3 col-md">
-                            <label for="atualizar-observacao" class="form-label">Observações</label>
-                            <textarea class="form-control" id="atualizar-observacao" name="atualizar-observacao" rows="3"></textarea>
+                            <label for="atualizar_observacao" class="form-label">Observações</label>
+                            <textarea class="form-control" id="atualizar_observacao" name="atualizar_observacao" rows="3"></textarea>
                         </div>
                     </div>
-                    <div class="text-end m-2">
+                    <div class="text-end p-3">
                         <button type="submit" class="btn btn-outline-success">Atualizar</button>
                     </div>
                 </div>
             </form>
-
         </div>
 
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <!-- Scripts dataTable -->
         <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
         <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
+        <!-- Fim scripts dataTable -->
 
-        <!-- Scripts dos Botões -->
+        <!-- Scripts dos Botões do dataTable -->
         <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.bootstrap5.js"></script>
         <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.dataTables.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
         <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js"></script>
         <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.colVis.min.js"></script>
-        <!-- fim scripts do Botões -->
+        <!-- fim scripts do Botões do dataTable -->
+
+        <script src="https://cdn.datatables.net/fixedcolumns/5.0.1/js/dataTables.fixedColumns.js"></script>
+        <script src="https://cdn.datatables.net/fixedcolumns/5.0.1/js/fixedColumns.dataTables.js"></script>
 
         <script src="/js/sweetalert2@11/sweetalert2@11.js"></script>
         <script src="/js/pet-cadastrar.js"></script>
