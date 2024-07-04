@@ -352,7 +352,7 @@ document.getElementById('atualizar').addEventListener('submit', async (e) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Ocorreu um erro ao atualizar o cadastro do usuário. Por favor, tente novamente mais tarde.',
+                text: `${error}`,
             });
         });
 
