@@ -45,11 +45,10 @@ document.getElementById('cadastrar').addEventListener('submit', async (e) => {
             }
         })
         .catch(error => {
-            console.error('Erro:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Ocorreu um erro ao cadastrar o pet. Por favor, tente novamente mais tarde.',
+                text: `${error}`,
             });
         });
 })
@@ -162,7 +161,7 @@ const listaPet = () => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Não foi possivel realizar a requisição',
+                text: `${error}`,
             });
         });
 }
@@ -212,9 +211,6 @@ const atualizar = (id) => {
         .then(result => {
             // tratamento dos resultados
             // exibe os dados no console do devtools(debug)
-
-            console.log('result', result)
-
 
             const data = new Date(result[0].data_nascimento)
             const dataFormatada = data.toISOString().split('T')[0];
@@ -274,11 +270,10 @@ document.getElementById('atualizar').addEventListener('submit', async (e) => {
             }
         })
         .catch(error => {
-            console.error('Erro:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Ocorreu um erro ao atualizar o pet. Por favor, tente novamente mais tarde.',
+                text: `${error}`,
             });
         });
 

@@ -51,11 +51,10 @@ document.getElementById('cadastrar').addEventListener('submit', async (e) => {
             }
         })
         .catch(error => {
-            console.error('Erro:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Ocorreu um erro ao realizar o cadastro. Por favor, tente novamente mais tarde.',
+                text: `${error}`,
             });
         });
 })
@@ -174,7 +173,7 @@ const listaPessoa = () => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: error,
+                text: `${error}`,
             });
         });
 }
@@ -182,7 +181,7 @@ const listaPessoa = () => {
 const deletar = (id, nome) => {
 
     Swal.fire({
-        title: `Deseja realmente deletar o usuario ${nome}?`,
+        title: `Deseja realmente deletar o usuário ${nome}?`,
         text: "Essa ação é irrevercivel",
         icon: "warning",
         showCancelButton: true,
@@ -277,8 +276,6 @@ const atualizar = (id) => {
             // tratamento dos resultados
             // exibe os dados no console do devtools(debug)
 
-            console.log('result', result)
-
 
             const data = new Date(result[0].data_nascimento)
             const dataFormatada = data.toISOString().split('T')[0];
@@ -348,7 +345,6 @@ document.getElementById('atualizar').addEventListener('submit', async (e) => {
             }
         })
         .catch(error => {
-            console.error('Erro:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -357,3 +353,59 @@ document.getElementById('atualizar').addEventListener('submit', async (e) => {
         });
 
 })
+
+// Função que consulta CEP na API (WebService) do VIACEP
+const atualizaConsultaCep = () => {
+    let cep = document.getElementById('atualizar_cep');
+
+    if (cep.value == '') {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: `Informe o cep`,
+        });
+        return;
+    }
+
+    fetch(`https://viacep.com.br/ws/${cep.value}/json/`)
+        .then(response => response.json())
+        .then(result => {
+            if (!result.erro) {
+                atualizar_rua.value = result.logradouro;
+                atualizar_bairro.value = result.bairro;
+                atualizar_cidade.value = result.localidade;
+                atualizar_estado.value = result.uf;
+
+                atualizar_numero.focus()
+
+                atualizar_rua.disabled = true;
+                atualizar_bairro.disabled = true;
+                atualizar_cidade.disabled = true;
+                atualizar_estado.disabled = true;
+            } else {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: 'CEP Inválido',
+                });
+                atualizar_rua.value = '';
+                atualizar_bairro.value = '';
+                atualizar_cidade.value = '';
+                atualizar_estado.value = '';
+
+
+                atualizar_rua.disabled = false;
+                atualizar_bairro.disabled = false;
+                atualizar_cidade.disabled = false;
+                atualizar_estado.disabled = false;
+
+            }
+        })
+        .catch((error) => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'CEP não encontrado',
+            });
+        });
+}

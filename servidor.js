@@ -166,6 +166,23 @@ app.put('/pet/atualizar', (req, res) => {
 })
 // Fim pet
 
+// Inicio pessoa
+app.put('/pessoa/atualizar', (req, res) => {
+    // criar as variaveis e armazena os valores recebidos na req
+    let { cpf, nome, email, rua, numero, bairro, complemento, cidade, estado, cep, rg, telefone, data_nascimento, senha, id } = req.body
+
+    // inserção dos dados no banco
+    const sql = "UPDATE pessoa SET cpf = ?, nome = ?, email = ?, rua = ?, numero = ?, bairro = ?, complemento = ?, cidade = ?, estado = ?, cep = ?, rg = ?, telefone = ?, data_nascimento = ?, senha = ? WHERE id = ?;"
+
+    db.query(sql, [cpf, nome, email, rua, numero, bairro, complemento, cidade, estado, cep, rg, telefone, data_nascimento, senha, id], (err) => {
+        if (err) {
+            res.status(500).json({ 'resposta': `${err}` })
+        }
+        return res.status(200).json({ 'resposta': `Registro do usuário ${nome} atualizado com sucesso!` })
+    })
+})
+// Fim pet
+
 
 
 
@@ -197,7 +214,7 @@ app.delete('/pessoa/deletar', (req, res) => {
         if (err) {
             return res.status(500).json({ 'resposta': `${err}`, 'titulo': `Erro`, 'icone': `error` })
         }
-        return res.status(200).json({ 'resposta': `usuario deletado com sucesso!`, 'titulo': `Sucesso`, 'icone': `success` })
+        return res.status(200).json({ 'resposta': `usuário deletado com sucesso!`, 'titulo': `Sucesso`, 'icone': `success` })
     })
 })
 // Fim pessoa
