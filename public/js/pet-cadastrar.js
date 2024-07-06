@@ -4,28 +4,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Adicionar um evento ao enviar o formulario
 document.getElementById('cadastrar').addEventListener('submit', async (e) => {
-    // bloqueia o evento padão(enviar o form via get)
+    // bloqueria o evento padrão(enviar o form via get)
     e.preventDefault();
 
-    // captura dos elementos do form
-    let nome = document.getElementById('nome')
-    let raca = document.getElementById('raca')
-    let porte = document.getElementById('porte')
-    let data_nascimento = document.getElementById('data_nascimento')
-    let cor = document.getElementById('cor')
-    let sexo = document.getElementById('sexo')
-    let castrado = document.getElementById('castrado').checked ? '1' : '0';
-    let adotado = document.getElementById('adotado').checked ? '1' : '0';
-    let observacao = document.getElementById('observacao')
+    // captura dos dados elementos do form
+    let form = document.getElementById('cadastrar')
 
-    // envio dos dados ao backend fetch(api)
-    await fetch('/pet/cadastrar', {
+
+    // captura todos os valores do formulário
+    let dados = new FormData(form)
+
+    if (castrado.checked == true) {
+        castrado = 1
+    }else{
+        castrado = 0
+    }
+
+    if (adotado.checked == true) {
+        adotado = 1
+    }else{
+        adotado = 0
+    }
+
+    dados.append('castrado',castrado)
+    dados.append('adotado',adotado)
+    
+    // envio dos dados ao backend usando fetch(api)
+    const response = await fetch('/pet/cadastrar', {
         method: 'POST',
-        body: `nome=${nome.value}&raca=${raca.value}&porte=${porte.value}&data_nascimento=${data_nascimento.value}&cor=${cor.value}&sexo=${sexo.value}&castrado=${castrado}&adotado=${adotado}&observacao=${observacao.value}`,
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-        }
+        body: dados,
     })
+
         .then(response => response.json())
         .then(data => {
             // Exibe o SweetAlert2 com base na resposta do servidor
@@ -43,8 +52,12 @@ document.getElementById('cadastrar').addEventListener('submit', async (e) => {
                     text: data.resposta,
                 });
             }
+            // reseta o formulário
+            document.getElementById('cadastrar').reset();
         })
+
         .catch(error => {
+            console.error('Erro:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',

@@ -2,6 +2,13 @@ const express = require('express')
 const mysql = require('mysql2')
 
 const app = express()
+
+// importacao do multer para uplod de arquivos
+const multer = require('multer')
+// importacao do modulo nativo patch
+const path = require('path')
+
+
 const porta = 4000
 
 
@@ -13,6 +20,18 @@ app.use(express.urlencoded({ extended: true }))
 
 // Converter os dados para JSON
 app.use(express.json())
+
+
+// Configuração do multer para salvar as imagens na pasta 'uploads'
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+const upload = multer({ storage: storage });
 
 
 // cria a string de conexão
@@ -94,19 +113,22 @@ app.post('/pet/listar/id', (req, res) => {
     })
 })
 
-app.post('/pet/cadastrar', (req, res) => {
-    // criar as variaveis e armazena os valores recebidos na req
+app.post('/pet/cadastrar', upload.single('imagem'), (req, res) => {
+
+    // cria as variaveis quee armazena os valores recebidos na resquisao
     let { nome, raca, porte, data_nascimento, cor, sexo, castrado, adotado, observacao } = req.body
+    let imagem = req.file ? req.file.filename : null;
 
     // inserção dos dados no banco
-    const sql = "INSERT INTO pet (nome, raca, porte, data_nascimento, cor, sexo, castrado, adotado, observacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
+    const query = "INSERT INTO pet (nome, raca, porte, data_nascimento, cor, sexo, castrado, adotado, observacao, imagem) VALUES (?,?,?,?,?,?,?,?,?,?);"
 
-    db.query(sql, [nome, raca, porte, data_nascimento, cor, sexo, castrado, adotado, observacao], (err) => {
+    db.query(query, [nome, raca, porte, data_nascimento, cor, sexo, castrado, adotado, observacao, imagem], (err) => {
         if (err) {
-            res.status(500).json({ 'resposta': `${err}` })
+            return res.status(500).json({ 'resposta': `${err}` })
         }
-        return res.status(200).json({ 'resposta': `Pet cadastrado com sucesso!` })
+        return res.status(200).json({ 'resposta': 'Pet cadastrado com sucesso!' })
     })
+
 })
 // Fim pet
 
