@@ -13,21 +13,6 @@ document.getElementById('cadastrar').addEventListener('submit', async (e) => {
 
     // captura todos os valores do formulário
     let dados = new FormData(form)
-
-    if (castrado.checked == true) {
-        castrado = 1
-    }else{
-        castrado = 0
-    }
-
-    if (adotado.checked == true) {
-        adotado = 1
-    }else{
-        adotado = 0
-    }
-
-    dados.append('castrado',castrado)
-    dados.append('adotado',adotado)
     
     // envio dos dados ao backend usando fetch(api)
     const response = await fetch('/pet/cadastrar', {
@@ -92,8 +77,8 @@ const listaPet = () => {
                     <td>${result[cont].observacao}</td>
                     <td>${result[cont].cor}</td>
                     <td>${result[cont].sexo == "M" ? 'Macho' : 'Fêmea'}</td>
-                    <td class="text-center">${result[cont].castrado == "1" ? 'Sim' : 'Não'}</td>
-                    <td class="text-center">${result[cont].adotado == "1" ? 'Sim' : 'Não'}</td>
+                    <td class="text-center">${result[cont].castrado == "on" ? 'Sim' : 'Não'}</td>
+                    <td class="text-center">${result[cont].adotado == "on" ? 'Sim' : 'Não'}</td>
                     <td class="text-center">
                         <i class="fa-solid fa-pen-to-square" style="color: #28a745; cursor: pointer;" onclick="atualizar(${result[cont].id})"></i>
                         <i class="fa-solid fa-trash" style="color: #ff0000; cursor: pointer;" onclick="deletar(${result[cont].id},'${result[cont].nome}')"></i>
@@ -234,8 +219,8 @@ const atualizar = (id) => {
             document.getElementById('atualizar_data_nascimento').value = dataFormatada
             document.getElementById('atualizar_cor').value = result[0].cor
             document.getElementById('atualizar_sexo').value = result[0].sexo
-            document.getElementById('atualizar_castrado').checked = result[0].castrado === '1' ? true : false
-            document.getElementById('atualizar_adotado').checked = result[0].adotado === '1' ? true : false
+            document.getElementById('atualizar_castrado').checked = result[0].castrado == 'on' ? true : false
+            document.getElementById('atualizar_adotado').checked = result[0].adotado == 'on' ? true : false
             document.getElementById('atualizar_observacao').value = result[0].observacao
             document.getElementById('atualizar_id').value = result[0].id
         })
@@ -253,8 +238,8 @@ document.getElementById('atualizar').addEventListener('submit', async (e) => {
     let data_nascimento = document.getElementById('atualizar_data_nascimento')
     let cor = document.getElementById('atualizar_cor')
     let sexo = document.getElementById('atualizar_sexo')
-    let castrado = document.getElementById('atualizar_castrado').checked ? '1' : '0';
-    let adotado = document.getElementById('atualizar_adotado').checked ? '1' : '0';
+    let castrado = document.getElementById('atualizar_castrado').checked ? 'on' : 'off';
+    let adotado = document.getElementById('atualizar_adotado').checked ? 'on' : 'off';
     let observacao = document.getElementById('atualizar_observacao')
     
     await fetch('/pet/atualizar', {
