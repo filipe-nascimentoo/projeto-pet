@@ -1,5 +1,6 @@
 const express = require('express')
 const mysql = require('mysql2')
+const session = require('express-session');
 
 const app = express()
 
@@ -20,6 +21,13 @@ app.use(express.urlencoded({ extended: true }))
 
 // Converter os dados para JSON
 app.use(express.json())
+
+app.use(session({
+    secret: 'seu_segredo',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Em produção, defina como true se estiver usando HTTPS
+}));
 
 
 // Configuração do multer para salvar as imagens na pasta 'uploads'
@@ -244,7 +252,54 @@ app.delete('/pessoa/deletar', (req, res) => {
 // Fim as rotas DELETE
 
 
+function autenticaLogin(req, res, next) {
+    if (req.session.user) {
+        next();
+    } else {
+        res.redirect('/admin/login');
+    }
+}
 
+// Rotas Admin
+
+app.get('/admin/dashboard', autenticaLogin, (req, res) => {
+    res.sendFile(__dirname + '/public/admin/views/dashboard.html');
+});
+
+app.get('/admin/login', (req, res) => {
+    res.sendFile(__dirname + '/public/admin/views/login.html');
+});
+
+app.post('/admin/login', (req, res) => {
+    const { email, senha } = req.body;
+
+    const sql = "SELECT * FROM pessoa WHERE email = ? AND senha = ?";
+    db.query(sql, [email, senha], (err, results) => {
+        if (err) {
+            return res.status(500).json({ success: false, message: `Erro no servidor: ${err}` });
+        }
+
+        if (results.length > 0) {
+            // Autenticação bem-sucedida
+            req.session.user = results[0];
+            res.status(200).json({ success: true, message: 'Login bem-sucedido!' });
+        } else {
+            // Credenciais inválidas
+            res.status(401).json({ success: false, message: 'Email ou senha incorretos!' });
+        }
+    });
+});
+
+app.post('/admin/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).json({ success: false, message: `Erro ao fazer logout: ${err}` });
+        }
+        res.status(200).json({ success: true, message: 'Logout bem-sucedido!' });
+    });
+});
+
+// Fim Rotas Admin
 
 
 
