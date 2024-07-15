@@ -64,6 +64,10 @@ app.get('/pet/cadastrar', (req, res) => {
 })
 
 app.get('/pet/listar', (req, res) => {
+    res.sendFile(__dirname + '/public/pet-listar.html')
+})
+
+app.get('/api/pet/listar', (req, res) => {
     const sql = "SELECT * FROM pet"
     db.query(sql, (err, results) => {
         if (err) {
