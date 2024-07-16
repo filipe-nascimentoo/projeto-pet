@@ -260,7 +260,7 @@ function autenticaLogin(req, res, next) {
     if (req.session.user) {
         next();
     } else {
-        res.redirect('/admin/login');
+        res.redirect('/admin');
     }
 }
 
@@ -270,8 +270,12 @@ app.get('/admin/dashboard', autenticaLogin, (req, res) => {
     res.sendFile(__dirname + '/public/admin/views/dashboard.html');
 });
 
-app.get('/admin/login', (req, res) => {
-    res.sendFile(__dirname + '/public/admin/views/login.html');
+app.get('/admin', (req, res) => {
+    if (req.session.user) {
+        res.redirect('/admin/dashboard');  // Redireciona para o dashboard se já estiver logado
+    } else {
+        res.sendFile(__dirname + '/public/admin/views/login.html');
+    }
 });
 
 app.post('/admin/login', (req, res) => {
