@@ -54,7 +54,7 @@ document.getElementById('cadastrar').addEventListener('submit', async (e) => {
 
 // função que solicita os pets cadastrados ao backend
 const listaPet = () => {
-    fetch('/api/pet/listar')
+    fetch('/pet/listar')
         .then(response => response.json())
         .then(result => {
             let tabela = document.getElementById('dados')

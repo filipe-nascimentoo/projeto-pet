@@ -99,7 +99,6 @@ const listaPessoa = () => {
                 </tr>
              `
             }
-
             table = new DataTable('#pessoas', {
                 fixedColumns: {
                     start: 2,

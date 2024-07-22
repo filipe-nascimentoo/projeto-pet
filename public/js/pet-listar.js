@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const listaPet = () => {
-    fetch('/api/pet/listar')
+    fetch('/pet/listar')
         .then(response => response.json())
         .then(result => {
             let petList = document.getElementById('pet-list');
