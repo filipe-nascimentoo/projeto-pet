@@ -1,15 +1,9 @@
 const express = require('express')
 const app = express()
 
-
-
-
-
-const porta = 4000
+const porta = 3000
 
 app.set('view engine', 'ejs');
-
-const db = require('./config/db_config.js')
 
 // Midleware para conteudo estatico
 app.use(express.static('public'))
@@ -26,7 +20,7 @@ app.get('/', (req, res) => {
     res.render(__dirname + '/public/index.ejs')
 })
 
-const rotasAdmins = require('./public/routes/admin.js')
+const rotasAdmins = require('./public/routes/admin/admin.js')
 app.use('/admin', rotasAdmins )
 
 const rotasPessoas = require('./public/routes/pessoa.js')

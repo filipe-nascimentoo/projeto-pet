@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cadastro de Usuários</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+
+    <!-- Css dataTable -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/5.0.1/css/fixedColumns.dataTables.css">
+    <link rel="stylesheet" href="../assets/css/geral.css">
+    <!-- Fim css dataTable -->
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pet/listar">Listar Pets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pessoa/cadastrar">Cadastrar Usuários</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pet/cadastrar" id="cadastrarPet">Cadastrar Pets</a>
+                    </li>
+
+                </ul>
+                
+                <ul class="nav navbar-nav" id="navbarNav">
+                    <li><a class="nav-link" href="#" id="inscrever">Inscrever-se</a></li>
+                    <li><a class="nav-link" href="#" id="loginLink">Login</a></li>
+                    <li><div id="userInfo" class="nav-link d-none"></div></li>
+                    <li><a class="nav-link d-none" href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>

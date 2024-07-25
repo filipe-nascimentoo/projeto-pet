@@ -1,5 +1,7 @@
 const express = require('express')
 const db = require('../../config/db_config.js')
+const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
 const router = express.Router()
 
 // importacao do multer para uplod de arquivos
@@ -16,7 +18,41 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-router.get('/cadastrar', (req, res) => {
+
+
+const sessionStore = new MySQLStore({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
+});
+router.use(session({
+    secret: 'sahsuamfghcjgkdlee',
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: false, // Em produção, defina como true se estiver usando HTTPS
+        maxAge: 300000 // Tempo de expiração em milissegundos (300 segundos)
+    }
+}));
+
+// Reset na cache após o usuário desconectar não permitindo que o usuário utilize o botão de voltar do navegador para acessar a última pagina logado
+router.use((req, res, next) => {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+    next();
+});
+
+function autenticaLogin(req, res, next) {
+    if (req.session.user) {
+        console.log('Usuário', req.session.user)
+        next();
+    } else {
+        res.redirect('/admin');
+    }
+}
+
+router.get('/cadastrar', autenticaLogin, (req, res) => {
     res.render(__dirname + '../../views/pet-cadastrar.ejs')
 })
 

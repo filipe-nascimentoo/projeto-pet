@@ -1,20 +1,39 @@
 const express = require('express')
-const db = require('../../config/db_config.js')
+const db = require('../../../config/db_config.js')
 const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
 const router = express.Router()
 
 
 // Rotas Admin
 
+const sessionStore = new MySQLStore({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
+});
 router.use(session({
-    secret: 'seu_segredo',
+    secret: 'sahsuamfghcjgkdlee',
+    store: sessionStore,
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false } // Em produção, defina como true se estiver usando HTTPS
+    saveUninitialized: false,
+    cookie: {
+        secure: false, // Em produção, defina como true se estiver usando HTTPS
+        maxAge: 300000 // Tempo de expiração em milissegundos (300 segundos)
+    }
 }));
+
+// Reset na cache após o usuário desconectar não permitindo que o usuário utilize o botão de voltar do navegador para acessar a última pagina logado
+router.use((req, res, next) => {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+    next();
+});
+
 
 function autenticaLogin(req, res, next) {
     if (req.session.user) {
+        console.log('Usuário', req.session.user)
         next();
     } else {
         res.redirect('/admin');
@@ -25,12 +44,13 @@ router.get('/', (req, res) => {
     if (req.session.user) {
         res.redirect('/admin/dashboard');  // Redireciona para o dashboard se já estiver logado
     } else {
-        res.render(__dirname + '../../admin/views/login.ejs');
+        res.render(__dirname + '../../../views/admin/login.ejs');
     }
 });
 
 router.get('/dashboard', autenticaLogin, (req, res) => {
-    res.render(__dirname + '../../admin/views/dashboard.ejs');
+    const { nome } = req.session.user;
+    res.render(__dirname + '../../../views/admin/dashboard.ejs', { nome: nome });
 });
 
 router.post('/login', (req, res) => {
@@ -51,6 +71,14 @@ router.post('/login', (req, res) => {
             res.status(401).json({ success: false, message: 'Email ou senha incorretos!' });
         }
     });
+});
+
+router.get('/check-login', (req, res) => {
+    if (req.session.user) {
+        res.json({ loggedIn: true, user: req.session.user });
+    } else {
+        res.json({ loggedIn: false });
+    }
 });
 
 router.post('/logout', (req, res) => {
