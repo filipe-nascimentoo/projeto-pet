@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(result => {
                 if (result.success) {
-                    window.location.href = '/admin/login';
+                    window.location.href = '/admin';
                 } else {
                     Swal.fire({
                         icon: 'error',

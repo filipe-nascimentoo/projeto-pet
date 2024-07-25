@@ -21,6 +21,10 @@ router.get('/cadastrar', (req, res) => {
 })
 
 router.get('/listar', (req, res) => {
+    res.render(__dirname + '../../views/pet-listar.ejs')
+})
+
+router.get('/api/listar', (req, res) => {
     const sql = "SELECT * FROM pet"
     db.query(sql, (err, results) => {
         if (err) {
@@ -77,10 +81,10 @@ router.put('/atualizar', (req, res) => {
 })
 
 router.delete('/deletar', (req, res) => {
-    let {id} = req.body
+    let { id } = req.body
 
     const sql = "DELETE FROM pet WHERE id = ?;"
-    
+
     db.query(sql, [id], (err) => {
         if (err) {
             return res.status(500).json({ 'resposta': `${err}`, 'titulo': `Erro`, 'icone': `error` })
