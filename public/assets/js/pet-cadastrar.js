@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    listaPet()
+    listaPet();
 })
 
 // Adicionar um evento ao enviar o formulario
@@ -13,7 +13,7 @@ document.getElementById('cadastrar').addEventListener('submit', async (e) => {
 
     // captura todos os valores do formulário
     let dados = new FormData(form)
-    
+
     // envio dos dados ao backend usando fetch(api)
     const response = await fetch('/pet/cadastrar', {
         method: 'POST',
@@ -86,7 +86,7 @@ const listaPet = () => {
                 </tr>
              `
             }
-            table = new DataTable('#pets', { 
+            table = new DataTable('#pets', {
                 fixedColumns: {
                     start: 1,
                     end: 1
@@ -204,32 +204,32 @@ const atualizar = (id) => {
             "Content-Type": "application/x-www-form-urlencoded",
         }
     })
-    .then(response => response.json())
-    .then(result => {
-        const data = new Date(result[0].data_nascimento);
-        const dataFormatada = data.toISOString().split('T')[0];
-        
-        document.getElementById('atualizar_id').value = result[0].id;
-        document.getElementById('atualizar_nome').value = result[0].nome;
-        document.getElementById('atualizar_raca').value = result[0].raca;
-        document.getElementById('atualizar_porte').value = result[0].porte;
-        document.getElementById('atualizar_data_nascimento').value = dataFormatada;
-        document.getElementById('atualizar_cor').value = result[0].cor;
-        document.getElementById('atualizar_sexo').value = result[0].sexo;
-        document.getElementById('atualizar_castrado').checked = result[0].castrado === 'on';
-        document.getElementById('atualizar_adotado').checked = result[0].adotado === 'on';
-        document.getElementById('atualizar_observacao').value = result[0].observacao;
+        .then(response => response.json())
+        .then(result => {
+            const data = new Date(result[0].data_nascimento);
+            const dataFormatada = data.toISOString().split('T')[0];
 
-        // Mostra o modal após preencher os dados
-        new bootstrap.Modal(document.getElementById('atualizarModal')).show();
-    })
-    .catch(error => {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: `${error}`,
+            document.getElementById('atualizar_id').value = result[0].id;
+            document.getElementById('atualizar_nome').value = result[0].nome;
+            document.getElementById('atualizar_raca').value = result[0].raca;
+            document.getElementById('atualizar_porte').value = result[0].porte;
+            document.getElementById('atualizar_data_nascimento').value = dataFormatada;
+            document.getElementById('atualizar_cor').value = result[0].cor;
+            document.getElementById('atualizar_sexo').value = result[0].sexo;
+            document.getElementById('atualizar_castrado').checked = result[0].castrado === 'on';
+            document.getElementById('atualizar_adotado').checked = result[0].adotado === 'on';
+            document.getElementById('atualizar_observacao').value = result[0].observacao;
+
+            // Mostra o modal após preencher os dados
+            new bootstrap.Modal(document.getElementById('atualizarModal')).show();
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `${error}`,
+            });
         });
-    });
 }
 
 document.getElementById('atualizar').addEventListener('submit', async (e) => {
@@ -247,7 +247,7 @@ document.getElementById('atualizar').addEventListener('submit', async (e) => {
     let castrado = document.getElementById('atualizar_castrado').checked ? 'on' : 'off';
     let adotado = document.getElementById('atualizar_adotado').checked ? 'on' : 'off';
     let observacao = document.getElementById('atualizar_observacao')
-    
+
     await fetch('/pet/atualizar', {
         method: 'PUT',
         body: `nome=${nome.value}&raca=${raca.value}&porte=${porte.value}&data_nascimento=${data_nascimento.value}&cor=${cor.value}&sexo=${sexo.value}&castrado=${castrado}&adotado=${adotado}&observacao=${observacao.value}&id=${id.value}`,
@@ -255,7 +255,7 @@ document.getElementById('atualizar').addEventListener('submit', async (e) => {
             "Content-Type": "application/x-www-form-urlencoded",
         }
     })
-    .then(response => response.json())
+        .then(response => response.json())
         .then(data => {
             // Exibe o SweetAlert2 com base na resposta do servidor
             if (data.resposta.includes('sucesso')) {
@@ -282,3 +282,50 @@ document.getElementById('atualizar').addEventListener('submit', async (e) => {
         });
 
 })
+
+// Função para formatar a data
+function formatarData(data) {
+    const partes = data.split('-');
+    return `${partes[2]}/${partes[1]}/${partes[0]}`; // Formato DD/MM/YYYY
+}
+
+fetch('/pet/api/grafico')
+.then(response => response.json())
+    .then(data => {
+        const { datas, pessoas, pets, adocao } = data;
+
+        // Formatando as datas para exibição no gráfico
+        const categorias = datas.map(formatarData);
+
+        const options = {
+            series: [
+                { name: 'Pets', data: pets },
+                { name: 'Adoção', data: adocao },
+                { name: 'Pessoas', data: pessoas }
+            ],
+            chart: {
+                height: 350,
+                type: 'area',
+                toolbar: { show: false }
+            },
+            markers: { size: 4 },
+            colors: ['#406DDE', '#2eca6a', '#ff771d'],
+            fill: {
+                type: "gradient",
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 0.3,
+                    opacityTo: 0.4,
+                    stops: [0, 90, 100]
+                }
+            },
+            dataLabels: { enabled: false },
+            stroke: { curve: 'smooth', width: 2 },
+            xaxis: { categories: categorias }
+        };
+
+        // Renderizar o gráfico
+        const chart = new ApexCharts(document.querySelector("#grafico"), options);
+        chart.render();
+    })
+    .catch(error => console.error('Erro ao carregar dados do gráfico:', error));

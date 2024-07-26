@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 
-const porta = 3000
+const porta = 4000
 
 app.set('view engine', 'ejs');
 
@@ -17,8 +17,8 @@ app.use(express.json())
 
 
 app.get('/', (req, res) => {
-    res.render(__dirname + '/public/index.ejs')
-})
+    res.render(__dirname + '/public/index.ejs', { title: 'Index' })
+}) 
 
 const rotasAdmins = require('./public/routes/admin/admin.js')
 app.use('/admin', rotasAdmins )

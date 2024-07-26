@@ -33,7 +33,7 @@ router.use((req, res, next) => {
 
 function autenticaLogin(req, res, next) {
     if (req.session.user) {
-        console.log('Usuário', req.session.user)
+        // console.log('Usuário', req.session.user)
         next();
     } else {
         res.redirect('/admin');
@@ -50,7 +50,7 @@ router.get('/', (req, res) => {
 
 router.get('/dashboard', autenticaLogin, (req, res) => {
     const { nome } = req.session.user;
-    res.render(__dirname + '../../../views/admin/dashboard.ejs', { nome: nome }, { title: 'Dashboard' });
+    res.render(__dirname + '../../../views/admin/dashboard.ejs', { nome: nome, title: 'Dashboard' });
 });
 
 router.post('/login', (req, res) => {

@@ -50,7 +50,7 @@
                                         <label for="sexo" class="form-label">Sexo</label>
                                         <select class="form-select" aria-label="Default select example" id="sexo"
                                             name="sexo">
-                                            <option selected>Selecione o sexo</option>
+                                            <option selected disbled>Selecione o sexo</option>
                                             <option value="M">Macho</option>
                                             <option value="F">Fêmea</option>
                                         </select>
@@ -123,10 +123,20 @@
                 </div>
             </div>
 
+            <div class="card">
+                <div class="card-header">
+                    <h4>Gráfico de Cadastrados</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Gráfico -->
+                    <div id="grafico"></div>
+                </div>
+            </div>
+
 
             <div class="modal fade" id="atualizarModal" tabindex="-1" aria-labelledby="atualizarModalLabel"
                 aria-hidden="true">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-xl modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="atualizarModalLabel">Atualizar Informações</h5>
@@ -156,7 +166,7 @@
                                             <label for="atualizar_porte" class="form-label">Porte</label>
                                             <select class="form-select" aria-label="Default select example"
                                                 id="atualizar_porte" name="atualizar_porte" required>
-                                                <option selected>Selecione o porte</option>
+                                                <option selected disbled>Selecione o porte</option>
                                                 <option value="Pequeno">Pequeno</option>
                                                 <option value="Médio">Médio</option>
                                                 <option value="Grande">Grande</option>
@@ -180,7 +190,7 @@
                                             <label for="atualizar_sexo" class="form-label">Sexo</label>
                                             <select class="form-select" aria-label="Default select example"
                                                 id="atualizar_sexo" name="atualizar_sexo">
-                                                <option selected>Selecione o sexo do pet</option>
+                                                <option selected disabled>Selecione o sexo do pet</option>
                                                 <option value="M">Macho</option>
                                                 <option value="F">Fêmea</option>
                                             </select>
@@ -241,6 +251,9 @@
         <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js"></script>
         <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.colVis.min.js"></script>
         <!-- fim scripts do Botões do dataTable -->
+
+        <!-- ApexCharts JS -->
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts@latest"></script>
 
         <script src="https://cdn.datatables.net/fixedcolumns/5.0.1/js/dataTables.fixedColumns.js"></script>
         <script src="https://cdn.datatables.net/fixedcolumns/5.0.1/js/fixedColumns.dataTables.js"></script>
