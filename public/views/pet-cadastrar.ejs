@@ -1,80 +1,97 @@
 <%- include ('../partials/head') %>
     <div class="container">
-        <form id="cadastrar">
-            <div class="card border-primary mb-3">
-                <div class="card-header">
-                    <h4>Cadastrar Pet</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="mb-3 col-md">
-                            <label for="nome" class="form-label">Nome</label>
-                            <input type="text" class="form-control" id="nome" name="nome" required>
-                        </div>
-                        <div class="mb-3 col-md">
-                            <label for="raca" class="form-label">Raça</label>
-                            <input type="text" class="form-control" id="raca" name="raca" required>
-                        </div>
-                        <div class="mb-3 col-md-2">
-                            <label for="porte" class="form-label">Porte</label>
-                            <select class="form-select" aria-label="Default select example" id="porte" name="porte"
-                                required>
-                                <option selected>Selecione o porte</option>
-                                <option value="Pequeno">Pequeno</option>
-                                <option value="Médio">Médio</option>
-                                <option value="Grande">Grande</option>
-                            </select>
-                        </div>
+        <button type="button" class="btn btn-outline-primary mb-2 mt-2" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">
+            Cadastrar
+        </button>
+        <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cadastrar novo pet</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-
-                    <div class="row">
-                        <div class="mb-3 col-md">
-                            <label for="data_nascimento" class="form-label">Data de nascimento</label>
-                            <input type="date" class="form-control" id="data_nascimento" name="data_nascimento">
-                        </div>
-                        <div class="mb-3 col-md">
-                            <label for="cor" class="form-label">Cor</label>
-                            <input type="text" class="form-control" id="cor" name="cor">
-                        </div>
-                        <div class="mb-3 col-md">
-                            <label for="sexo" class="form-label">Sexo</label>
-                            <select class="form-select" aria-label="Default select example" id="sexo" name="sexo">
-                                <option selected>Selecione o sexo do pet</option>
-                                <option value="M">Macho</option>
-                                <option value="F">Fêmea</option>
-                            </select>
-                        </div>
-                        <div class="mb-3 col-md">
-                            <label class="form-label">Mais Informações</label>
-                            <div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="castrado" name="castrado">
-                                    <label class="form-check-label" for="castrado">Castrado</label>
+                    <div class="modal-body">
+                        <form id="cadastrar">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="mb-3 col-md">
+                                        <label for="nome" class="form-label">Nome</label>
+                                        <input type="text" class="form-control" id="nome" name="nome" required>
+                                    </div>
+                                    <div class="mb-3 col-md">
+                                        <label for="raca" class="form-label">Raça</label>
+                                        <input type="text" class="form-control" id="raca" name="raca" required>
+                                    </div>
+                                    <div class="mb-3 col-md-3">
+                                        <label for="porte" class="form-label">Porte</label>
+                                        <select class="form-select" aria-label="Default select example" id="porte"
+                                            name="porte" required>
+                                            <option selected disabled>Selecione o porte</option>
+                                            <option value="Pequeno">Pequeno</option>
+                                            <option value="Médio">Médio</option>
+                                            <option value="Grande">Grande</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="adotado" name="adotado">
-                                    <label class="form-check-label" for="adotado">Adotado</label>
+
+                                <div class="row">
+                                    <div class="mb-3 col-md">
+                                        <label for="data_nascimento" class="form-label">Data de nascimento</label>
+                                        <input type="date" class="form-control" id="data_nascimento"
+                                            name="data_nascimento">
+                                    </div>
+                                    <div class="mb-3 col-md">
+                                        <label for="cor" class="form-label">Cor</label>
+                                        <input type="text" class="form-control" id="cor" name="cor">
+                                    </div>
+                                    <div class="mb-3 col-md">
+                                        <label for="sexo" class="form-label">Sexo</label>
+                                        <select class="form-select" aria-label="Default select example" id="sexo"
+                                            name="sexo">
+                                            <option selected>Selecione o sexo</option>
+                                            <option value="M">Macho</option>
+                                            <option value="F">Fêmea</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 col-md">
+                                        <label class="form-label">Mais Informações</label>
+                                        <div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="castrado"
+                                                    name="castrado">
+                                                <label class="form-check-label" for="castrado">Castrado</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="adotado"
+                                                    name="adotado">
+                                                <label class="form-check-label" for="adotado">Adotado</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 col-md">
+                                    <label for="observacao" class="form-label">Observações</label>
+                                    <textarea class="form-control" id="observacao" name="observacao"
+                                        rows="3"></textarea>
+                                </div>
+
+                                <div class="mb-3 col-md">
+                                    <label for="imagem" class="form-label">Imagem</label>
+                                    <input type="file" class="form-control" id="imagem" name="imagem" required>
+                                </div>
+
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-outline-success">Cadastrar</button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
-
-                    <div class="mb-3 col-md">
-                        <label for="observacao" class="form-label">Observações</label>
-                        <textarea class="form-control" id="observacao" name="observacao" rows="3"></textarea>
-                    </div>
-
-                    <div class="mb-3 col-md">
-                        <label for="imagem" class="form-label">Imagem</label>
-                        <input type="file" class="form-control" id="imagem" name="imagem" required>
-                    </div>
-                </div>
-
-                <div class="text-end p-3">
-                    <button type="submit" class="btn btn-outline-success">Cadastrar</button>
                 </div>
             </div>
-        </form>
+        </div>
 
         <!-- Listagem -->
         <div id="listagem">
@@ -107,88 +124,100 @@
             </div>
 
 
-            <form id="atualizar">
-                <div class="card border-primary mb-3">
-                    <div class="card-header">
-                        <h4>Atualizar Pet</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="mb-3 col-md-1">
-                                <label for="atualizar_id" class="form-label">ID</label>
-                                <input type="text" class="form-control" id="atualizar_id" name="atualizar_id"
-                                    placeholder="" readonly>
-                            </div>
-
-                            <div class="mb-3 col-md">
-                                <label for="atualizar_nome" class="form-label">Nome</label>
-                                <input type="text" class="form-control" id="atualizar_nome" name="atualizar_nome"
-                                    required>
-                            </div>
-                            <div class="mb-3 col-md">
-                                <label for="atualizar_raca" class="form-label">Raça</label>
-                                <input type="text" class="form-control" id="atualizar_raca" name="atualizar_raca"
-                                    required>
-                            </div>
-                            <div class="mb-3 col-md-2">
-                                <label for="atualizar_porte" class="form-label">Porte</label>
-                                <select class="form-select" aria-label="Default select example" id="atualizar_porte"
-                                    name="atualizar_porte" required>
-                                    <option selected>Selecione o porte</option>
-                                    <option value="Pequeno">Pequeno</option>
-                                    <option value="Médio">Médio</option>
-                                    <option value="Grande">Grande</option>
-                                </select>
-                            </div>
+            <div class="modal fade" id="atualizarModal" tabindex="-1" aria-labelledby="atualizarModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="atualizarModalLabel">Atualizar Informações</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+                        <div class="modal-body">
+                            <form id="atualizar">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="mb-3 col-md-1">
+                                            <label for="atualizar_id" class="form-label">ID</label>
+                                            <input type="text" class="form-control" id="atualizar_id"
+                                                name="atualizar_id" placeholder="" readonly>
+                                        </div>
 
-                        <div class="row">
-                            <div class="mb-3 col-md">
-                                <label for="atualizar_data_nascimento" class="form-label">Data de nascimento</label>
-                                <input type="date" class="form-control" id="atualizar_data_nascimento"
-                                    name="atualizar_data_nascimento">
-                            </div>
-                            <div class="mb-3 col-md">
-                                <label for="atualizar_cor" class="form-label">Cor</label>
-                                <input type="text" class="form-control" id="atualizar_cor" name="atualizar_cor">
-                            </div>
-                            <div class="mb-3 col-md">
-                                <label for="atualizar_sexo" class="form-label">Sexo</label>
-                                <select class="form-select" aria-label="Default select example" id="atualizar_sexo"
-                                    name="atualizar_sexo">
-                                    <option selected>Selecione o sexo do pet</option>
-                                    <option value="M">Macho</option>
-                                    <option value="F">Fêmea</option>
-                                </select>
-                            </div>
-                            <div class="mb-3 col-md">
-                                <label class="form-label">Mais Informações</label>
-                                <div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="atualizar_castrado"
-                                            name="atualizar_castrado">
-                                        <label class="form-check-label" for="atualizar_castrado">Castrado</label>
+                                        <div class="mb-3 col-md">
+                                            <label for="atualizar_nome" class="form-label">Nome</label>
+                                            <input type="text" class="form-control" id="atualizar_nome"
+                                                name="atualizar_nome" required>
+                                        </div>
+                                        <div class="mb-3 col-md">
+                                            <label for="atualizar_raca" class="form-label">Raça</label>
+                                            <input type="text" class="form-control" id="atualizar_raca"
+                                                name="atualizar_raca" required>
+                                        </div>
+                                        <div class="mb-3 col-md-2">
+                                            <label for="atualizar_porte" class="form-label">Porte</label>
+                                            <select class="form-select" aria-label="Default select example"
+                                                id="atualizar_porte" name="atualizar_porte" required>
+                                                <option selected>Selecione o porte</option>
+                                                <option value="Pequeno">Pequeno</option>
+                                                <option value="Médio">Médio</option>
+                                                <option value="Grande">Grande</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="atualizar_adotado"
-                                            name="atualizar_adotado">
-                                        <label class="form-check-label" for="atualizar_adotado">Adotado</label>
+
+                                    <div class="row">
+                                        <div class="mb-3 col-md">
+                                            <label for="atualizar_data_nascimento" class="form-label">Data de
+                                                nascimento</label>
+                                            <input type="date" class="form-control" id="atualizar_data_nascimento"
+                                                name="atualizar_data_nascimento">
+                                        </div>
+                                        <div class="mb-3 col-md">
+                                            <label for="atualizar_cor" class="form-label">Cor</label>
+                                            <input type="text" class="form-control" id="atualizar_cor"
+                                                name="atualizar_cor">
+                                        </div>
+                                        <div class="mb-3 col-md">
+                                            <label for="atualizar_sexo" class="form-label">Sexo</label>
+                                            <select class="form-select" aria-label="Default select example"
+                                                id="atualizar_sexo" name="atualizar_sexo">
+                                                <option selected>Selecione o sexo do pet</option>
+                                                <option value="M">Macho</option>
+                                                <option value="F">Fêmea</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md">
+                                            <label class="form-label">Mais Informações</label>
+                                            <div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="atualizar_castrado" name="atualizar_castrado">
+                                                    <label class="form-check-label"
+                                                        for="atualizar_castrado">Castrado</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="atualizar_adotado" name="atualizar_adotado">
+                                                    <label class="form-check-label"
+                                                        for="atualizar_adotado">Adotado</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 col-md">
+                                        <label for="atualizar_observacao" class="form-label">Observações</label>
+                                        <textarea class="form-control" id="atualizar_observacao"
+                                            name="atualizar_observacao" rows="3"></textarea>
+                                    </div>
+                                    <div class="text-end">
+                                        <button type="submit" class="btn btn-outline-success">Atualizar</button>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-
-                        <div class="mb-3 col-md">
-                            <label for="atualizar_observacao" class="form-label">Observações</label>
-                            <textarea class="form-control" id="atualizar_observacao" name="atualizar_observacao"
-                                rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div class="text-end p-3">
-                        <button type="submit" class="btn btn-outline-success">Atualizar</button>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
 
 

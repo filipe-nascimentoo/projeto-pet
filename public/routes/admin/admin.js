@@ -20,7 +20,7 @@ router.use(session({
     saveUninitialized: false,
     cookie: {
         secure: false, // Em produção, defina como true se estiver usando HTTPS
-        maxAge: 300000 // Tempo de expiração em milissegundos (300 segundos)
+        // maxAge: 300000 // Tempo de expiração em milissegundos (300 segundos)
     }
 }));
 
@@ -44,13 +44,13 @@ router.get('/', (req, res) => {
     if (req.session.user) {
         res.redirect('/admin/dashboard');  // Redireciona para o dashboard se já estiver logado
     } else {
-        res.render(__dirname + '../../../views/admin/login.ejs');
+        res.render(__dirname + '../../../views/admin/login.ejs', { title: 'Login' });
     }
 });
 
 router.get('/dashboard', autenticaLogin, (req, res) => {
     const { nome } = req.session.user;
-    res.render(__dirname + '../../../views/admin/dashboard.ejs', { nome: nome });
+    res.render(__dirname + '../../../views/admin/dashboard.ejs', { nome: nome }, { title: 'Dashboard' });
 });
 
 router.post('/login', (req, res) => {

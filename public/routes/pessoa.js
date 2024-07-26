@@ -4,7 +4,7 @@ const router = express.Router()
 
 
 router.get('/cadastrar', (req, res) => {
-    res.render(__dirname + '../../views/pessoa-cadastrar.ejs')
+    res.render(__dirname + '../../views/pessoa-cadastrar.ejs', { title: 'Cadastrar' })
 })
 
 router.get('/listar', (req, res) => {

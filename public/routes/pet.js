@@ -33,7 +33,7 @@ router.use(session({
     saveUninitialized: false,
     cookie: {
         secure: false, // Em produção, defina como true se estiver usando HTTPS
-        maxAge: 300000 // Tempo de expiração em milissegundos (300 segundos)
+        // maxAge: 300000 // Tempo de expiração em milissegundos (300 segundos)
     }
 }));
 
@@ -53,11 +53,11 @@ function autenticaLogin(req, res, next) {
 }
 
 router.get('/cadastrar', autenticaLogin, (req, res) => {
-    res.render(__dirname + '../../views/pet-cadastrar.ejs')
+    res.render(__dirname + '../../views/pet-cadastrar.ejs', { title: 'Cadastrar' })
 })
 
 router.get('/listar', (req, res) => {
-    res.render(__dirname + '../../views/pet-listar.ejs')
+    res.render(__dirname + '../../views/pet-listar.ejs', { title: 'Listar' })
 })
 
 router.get('/api/listar', (req, res) => {

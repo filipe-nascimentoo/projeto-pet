@@ -197,7 +197,6 @@ const deletar = (id, nome) => {
 }
 
 const atualizar = (id) => {
-    // listar os dados apenas do pet selecionado
     fetch('/pet/listar/id', {
         method: 'POST',
         body: `id=${id}`,
@@ -205,25 +204,32 @@ const atualizar = (id) => {
             "Content-Type": "application/x-www-form-urlencoded",
         }
     })
-        .then(response => response.json())
-        .then(result => {
-            // tratamento dos resultados
-            // exibe os dados no console do devtools(debug)
+    .then(response => response.json())
+    .then(result => {
+        const data = new Date(result[0].data_nascimento);
+        const dataFormatada = data.toISOString().split('T')[0];
+        
+        document.getElementById('atualizar_id').value = result[0].id;
+        document.getElementById('atualizar_nome').value = result[0].nome;
+        document.getElementById('atualizar_raca').value = result[0].raca;
+        document.getElementById('atualizar_porte').value = result[0].porte;
+        document.getElementById('atualizar_data_nascimento').value = dataFormatada;
+        document.getElementById('atualizar_cor').value = result[0].cor;
+        document.getElementById('atualizar_sexo').value = result[0].sexo;
+        document.getElementById('atualizar_castrado').checked = result[0].castrado === 'on';
+        document.getElementById('atualizar_adotado').checked = result[0].adotado === 'on';
+        document.getElementById('atualizar_observacao').value = result[0].observacao;
 
-            const data = new Date(result[0].data_nascimento)
-            const dataFormatada = data.toISOString().split('T')[0];
-
-            document.getElementById('atualizar_nome').value = result[0].nome
-            document.getElementById('atualizar_raca').value = result[0].raca
-            document.getElementById('atualizar_porte').value = result[0].porte
-            document.getElementById('atualizar_data_nascimento').value = dataFormatada
-            document.getElementById('atualizar_cor').value = result[0].cor
-            document.getElementById('atualizar_sexo').value = result[0].sexo
-            document.getElementById('atualizar_castrado').checked = result[0].castrado == 'on' ? true : false
-            document.getElementById('atualizar_adotado').checked = result[0].adotado == 'on' ? true : false
-            document.getElementById('atualizar_observacao').value = result[0].observacao
-            document.getElementById('atualizar_id').value = result[0].id
-        })
+        // Mostra o modal após preencher os dados
+        new bootstrap.Modal(document.getElementById('atualizarModal')).show();
+    })
+    .catch(error => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${error}`,
+        });
+    });
 }
 
 document.getElementById('atualizar').addEventListener('submit', async (e) => {
