@@ -47,10 +47,37 @@
                 
                 <ul class="nav navbar-nav" id="navbarNav">
                     <li><a class="nav-link" href="#" id="inscrever">Inscrever-se</a></li>
-                    <li><a class="nav-link" href="#" id="loginLink">Login</a></li>
+                    <li><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal" id="loginLink">Login</a></li>
                     <li><div id="userInfo" class="nav-link d-none"></div></li>
                     <li><a class="nav-link d-none" href="#" id="logoutBtn">Logout</a></li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <!-- Modal de Login -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="senha" class="form-label">Senha</label>
+                            <input type="password" class="form-control" id="senha" name="senha" required>
+                        </div>
+                        <div class="text-end">
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
