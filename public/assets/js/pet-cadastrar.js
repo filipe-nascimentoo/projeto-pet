@@ -29,7 +29,7 @@ document.getElementById('cadastrar').addEventListener('submit', async (e) => {
                     title: 'Sucesso!',
                     text: data.resposta,
                 });
-                listaPet()
+                listaPet();
             } else {
                 Swal.fire({
                     icon: 'error',
@@ -190,7 +190,7 @@ const deletar = (id, nome) => {
                         text: result.resposta,
                         icon: result.icone
                     });
-                    listaPet()
+                    listaPet();
                 })
         }
     });
@@ -264,7 +264,7 @@ document.getElementById('atualizar').addEventListener('submit', async (e) => {
                     title: 'Sucesso!',
                     text: data.resposta,
                 });
-                listaPet()
+                listaPet();
             } else {
                 Swal.fire({
                     icon: 'error',
@@ -282,50 +282,3 @@ document.getElementById('atualizar').addEventListener('submit', async (e) => {
         });
 
 })
-
-// Função para formatar a data
-function formatarData(data) {
-    const partes = data.split('-');
-    return `${partes[2]}/${partes[1]}/${partes[0]}`; // Formato DD/MM/YYYY
-}
-
-fetch('/pet/api/grafico')
-.then(response => response.json())
-    .then(data => {
-        const { datas, pessoas, pets, adocao } = data;
-
-        // Formatando as datas para exibição no gráfico
-        const categorias = datas.map(formatarData);
-
-        const options = {
-            series: [
-                { name: 'Pets', data: pets },
-                { name: 'Adoção', data: adocao },
-                { name: 'Pessoas', data: pessoas }
-            ],
-            chart: {
-                height: 350,
-                type: 'area',
-                toolbar: { show: false }
-            },
-            markers: { size: 4 },
-            colors: ['#406DDE', '#2eca6a', '#ff771d'],
-            fill: {
-                type: "gradient",
-                gradient: {
-                    shadeIntensity: 1,
-                    opacityFrom: 0.3,
-                    opacityTo: 0.4,
-                    stops: [0, 90, 100]
-                }
-            },
-            dataLabels: { enabled: false },
-            stroke: { curve: 'smooth', width: 2 },
-            xaxis: { categories: categorias }
-        };
-
-        // Renderizar o gráfico
-        const chart = new ApexCharts(document.querySelector("#grafico"), options);
-        chart.render();
-    })
-    .catch(error => console.error('Erro ao carregar dados do gráfico:', error));

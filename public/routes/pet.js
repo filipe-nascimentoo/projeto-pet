@@ -7,6 +7,8 @@ const router = express.Router()
 // importacao do multer para uplod de arquivos
 const multer = require('multer')
 
+const path = require('path');
+
 // Configuração do multer para salvar as imagens na pasta 'uploads'
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -69,45 +71,6 @@ router.get('/api/listar', (req, res) => {
         return res.status(200).json(results)
     })
 })
-
-router.get('/api/grafico', (req, res) => {
-    const sql = `
-        SELECT 
-            data.dia,
-            IFNULL(u.pessoas, 0) AS pessoas,
-            IFNULL(v.pets, 0) AS pets,
-            IFNULL(e.adocao, 0) AS adocao
-        FROM
-            (SELECT DATE(data_cadastro) AS dia FROM pessoa
-            UNION
-            SELECT DATE(data_cadastro) AS dia FROM adocao
-            UNION
-            SELECT DATE(data_cadastro) AS dia FROM pet) AS data
-        LEFT JOIN
-            (SELECT DATE(data_cadastro) AS dia, COUNT(*) AS pessoas FROM pessoa GROUP BY dia) AS u
-        ON data.dia = u.dia
-        LEFT JOIN
-            (SELECT DATE(data_cadastro) AS dia, COUNT(*) AS adocao FROM adocao GROUP BY dia) AS e
-        ON data.dia = e.dia
-        LEFT JOIN
-            (SELECT DATE(data_cadastro) AS dia, COUNT(*) AS pets FROM pet GROUP BY dia) AS v
-        ON data.dia = v.dia
-        ORDER BY data.dia;
-    `;
-    db.query(sql, (err, results) => {
-        if (err) {
-            return res.status(500).json({ 'resposta': `${err}` });
-        }
-
-        // Formatar os dados para o gráfico
-        const datas = results.map(row => row.dia.toISOString().split('T')[0]);
-        const pessoas = results.map(row => row.pessoas);
-        const pets = results.map(row => row.pets);
-        const adocao = results.map(row => row.adocao);
-
-        res.json({ datas, pessoas, pets, adocao });
-    });
-});
 
 router.post('/listar/id', (req, res) => {
 

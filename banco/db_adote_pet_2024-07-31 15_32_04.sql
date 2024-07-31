@@ -14,7 +14,14 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+
+-- Copiando estrutura do banco de dados para db_adote_pet
+DROP DATABASE IF EXISTS `db_adote_pet`;
+CREATE DATABASE IF NOT EXISTS `db_adote_pet` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+USE `db_adote_pet`;
+
 -- Copiando estrutura para tabela db_adote_pet.adocao
+DROP TABLE IF EXISTS `adocao`;
 CREATE TABLE IF NOT EXISTS `adocao` (
   `id_adocao` int(11) NOT NULL AUTO_INCREMENT,
   `fk_id_pet` int(11) NOT NULL,
@@ -41,6 +48,7 @@ INSERT INTO `adocao` (`id_adocao`, `fk_id_pet`, `fk_id_pessoa`, `data_adocao`, `
 	(9, 14, 8, '2024-06-06', 'Carlos Souza', '2024-07-26 09:41:32');
 
 -- Copiando estrutura para tabela db_adote_pet.pessoa
+DROP TABLE IF EXISTS `pessoa`;
 CREATE TABLE IF NOT EXISTS `pessoa` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cpf` varchar(11) NOT NULL,
@@ -63,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `pessoa` (
 
 -- Copiando dados para a tabela db_adote_pet.pessoa: ~9 rows (aproximadamente)
 INSERT INTO `pessoa` (`id`, `cpf`, `nome`, `email`, `rua`, `numero`, `bairro`, `complemento`, `cidade`, `estado`, `cep`, `rg`, `telefone`, `data_nascimento`, `senha`, `data_cadastro`) VALUES
-	(1, '12345678909', 'Filipe', '', 'Rua 1', '10', 'Bobos', '', 'São João da Boa Vista', 'SP', '13877056', '417967706', '19981068804', '1995-06-22', '123456', '2024-07-26 09:40:29'),
+	(1, '12345678909', 'Filipe', '', 'Rua 1', '10', 'Bobos', '', 'São João da Boa Vista', 'SP', '13877056', '417967706', '19981068804', '1995-06-22', '123456', '2024-07-21 09:40:29'),
 	(2, '10245678911', 'Guilherme', '', 'Rua 2', '23', 'Bobos', '', 'Aguaí', 'SP', '13800408', '417967713', '1982766552', '1993-06-12', '654123', '2024-07-26 09:40:29'),
 	(3, '10123458911', 'Maria', '', 'Rua 3', '13', 'Bobos', '', 'São Paulo', 'SP', '12350408', '411234513', '1915466552', '1990-06-12', '365223', '2024-07-26 09:40:29'),
 	(4, '10123465412', 'Thiago', '', 'Rua 6', '850', 'Bobos', '', 'São Paulo', 'SP', '12356541', '411123453', '1917894562', '1970-07-01', '987423', '2024-07-26 09:40:29'),
@@ -74,6 +82,7 @@ INSERT INTO `pessoa` (`id`, `cpf`, `nome`, `email`, `rua`, `numero`, `bairro`, `
 	(13, '42512262839', 'Luis Filipe dos Santos Nascimento', 'filipe_nascimentoo@hotmail.com', 'Maria de Lourdes Valim Campos', '181', 'Jd. Aurora', 'casa', 'São João da Boa Vista', 'SP', '13877056', '417967706', '19981068804', '1995-06-22', '123', '2024-07-26 09:40:29');
 
 -- Copiando estrutura para tabela db_adote_pet.pet
+DROP TABLE IF EXISTS `pet`;
 CREATE TABLE IF NOT EXISTS `pet` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
@@ -88,9 +97,9 @@ CREATE TABLE IF NOT EXISTS `pet` (
   `imagem` varchar(50) DEFAULT NULL,
   `data_cadastro` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela db_adote_pet.pet: ~9 rows (aproximadamente)
+-- Copiando dados para a tabela db_adote_pet.pet: ~10 rows (aproximadamente)
 INSERT INTO `pet` (`id`, `nome`, `raca`, `porte`, `data_nascimento`, `observacao`, `cor`, `sexo`, `castrado`, `adotado`, `imagem`, `data_cadastro`) VALUES
 	(4, 'Toby', 'Salsichinha', 'Pequeno', '2020-06-01', 'Encontrada na rua', 'Mestiço', 'M', 'on', 'on', NULL, '2024-07-26 09:35:59'),
 	(5, 'Bili', 'Dálmata', 'Grande', '2019-05-23', '', 'Cinza', 'M', 'off', 'off', NULL, '2024-07-26 09:35:59'),
@@ -100,9 +109,11 @@ INSERT INTO `pet` (`id`, `nome`, `raca`, `porte`, `data_nascimento`, `observacao
 	(11, 'Rex', 'Labrador', 'Grande', '2021-01-01', 'Muito ativo', 'Marrom', 'M', 'on', 'on', NULL, '2024-07-26 09:35:59'),
 	(12, 'Luna', 'Siamês', 'Pequeno', '2022-03-15', 'Calma e carinhosa', 'Branco', 'F', 'off', 'on', NULL, '2024-07-26 09:35:59'),
 	(14, 'Nala', 'Persa', 'Pequeno', '2020-11-25', 'Independente', 'Cinza', 'F', 'on', 'on', NULL, '2024-07-26 09:35:59'),
-	(88, 'toto', 'vira lata', 'Médio', '1995-06-22', 'teste', 'branco', 'M', 'on', NULL, '1720277088622.jpg', '2024-07-26 09:35:59');
+	(88, 'toto', 'vira lata', 'Médio', '1995-06-22', 'teste', 'branco', 'M', 'on', 'off', '1720277088622.jpg', '2024-07-26 09:35:59'),
+	(90, 'Tobinho', 'Vira Lata', 'Pequeno', '2024-07-31', 'cachorro muito manso', 'Preto', 'M', 'off', 'off', '1722448076388.jpeg', '2024-07-31 14:47:56');
 
 -- Copiando estrutura para tabela db_adote_pet.sessions
+DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE IF NOT EXISTS `sessions` (
   `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `expires` int(11) unsigned NOT NULL,
@@ -112,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 
 -- Copiando dados para a tabela db_adote_pet.sessions: ~1 rows (aproximadamente)
 INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-	('lOg6HNuZpYXkJfh23dYsfnMHzvVKOLQP', 1722087002, '{"cookie":{"originalMaxAge":null,"expires":null,"secure":false,"httpOnly":true,"path":"/"},"user":{"id":13,"cpf":"42512262839","nome":"Luis Filipe dos Santos Nascimento","email":"filipe_nascimentoo@hotmail.com","rua":"Maria de Lourdes Valim Campos","numero":"181","bairro":"Jd. Aurora","complemento":"casa","cidade":"São João da Boa Vista","estado":"SP","cep":"13877056","rg":"417967706","telefone":"19981068804","data_nascimento":"1995-06-22T03:00:00.000Z","senha":"123"}}');
+	('4fTsYl1gc7Cmaom93aZDnjlRPHcE6PtG', 1722537042, '{"cookie":{"originalMaxAge":null,"expires":null,"secure":false,"httpOnly":true,"path":"/"},"user":{"id":13,"cpf":"42512262839","nome":"Luis Filipe dos Santos Nascimento","email":"filipe_nascimentoo@hotmail.com","rua":"Maria de Lourdes Valim Campos","numero":"181","bairro":"Jd. Aurora","complemento":"casa","cidade":"São João da Boa Vista","estado":"SP","cep":"13877056","rg":"417967706","telefone":"19981068804","data_nascimento":"1995-06-22T03:00:00.000Z","senha":"123","data_cadastro":"2024-07-26T12:40:29.000Z"}}');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
